@@ -8,11 +8,11 @@ function App() {
  
 
   return (
-    <>
-     <CommonLayout>
+    <div className=''>
+       <CommonLayout>
         <Outlet></Outlet>
      </CommonLayout>
-    </>
+    </div>
   )
 }
 
