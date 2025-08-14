@@ -5,7 +5,7 @@ const Footer = () => {
         <footer className="bg-sidebar-accent dark:bg-gray-900 mt-5">
             <div className="container mx-auto  space-y-8 px-4 py-16 sm:px-6 lg:space-y-16 lg:px-8">
                 <div className="sm:flex sm:items-center sm:justify-between">
-                    <div className="text-teal-500 dark:text-teal-300 flex items-center justify-start">
+                    <div className="text-orange-500 dark:text-orange-300 flex items-center justify-start">
                         <Logo></Logo>
                         <h1 className="text-3xl font-bold italic">Tour Fair</h1>
                     </div>
