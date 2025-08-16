@@ -109,7 +109,7 @@ export default function Component() {
         <div className="flex items-center gap-2">
           <ModeToggle></ModeToggle>
           <Button asChild variant="ghost" size="sm" className="text-sm">
-            <a href="#">Sign In</a>
+            <a href="/register">Sign In</a>
           </Button>
           <Button asChild size="sm" className="text-sm">
             <a href="#">Get Started</a>

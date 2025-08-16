@@ -2,6 +2,7 @@ import App from "@/App";
 import AdminLayout from "@/components/Layouts/AdminLayout";
 import About from "@/pages/About";
 import Analytics from "@/pages/Analytics";
+import Register from "@/pages/Register";
 import { createBrowserRouter } from "react-router";
 
 const router = createBrowserRouter([
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
             path: "/about"
         }
     ]
+  },
+  {
+    Component: Register,
+    path: "/register"
   },
   {
     Component: AdminLayout,
