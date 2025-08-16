@@ -16,6 +16,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 // import { Divide } from "lucide-react";
 import Password from "../ui/Password";
+import { useRegisterMutation } from "@/Redux/Features/Auth/auth.api";
+import { toast } from "sonner";
 
 // const registerSchema = z
 //   .object({
@@ -50,7 +52,7 @@ export function RegisterForm({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
-  // const [register] = useRegisterMutation();
+  const [register] = useRegisterMutation();
   // const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -62,13 +64,16 @@ export function RegisterForm({
   })
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    // const userInfo = {
-    //   name: data.name,
-    //   email: data.email,
-    //   password: data.password,
-    // };
+    const userInfo = {
+      name: data.name,
+      email: data.email,
+      password: data.password,
+    };
 
-    console.log(data)
+    const res = await register(userInfo)
+    toast.success("you're sign-up successfully")
+
+    console.log(res)
   };
 
   return (
