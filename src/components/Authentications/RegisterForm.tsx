@@ -11,7 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useForm } from "react-hook-form";
-import { Link} from "react-router";
+import { Link } from "react-router";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 // import { Divide } from "lucide-react";
@@ -43,9 +43,9 @@ const formSchema = z.object({
   email: z.string(),
   password: z.string().min(6),
   confirmPassword: z.string().min(6),
-}).refine((data)=>data.password === data.confirmPassword, {
+}).refine((data) => data.password === data.confirmPassword, {
   message: "Password don't matche",
-  path:["confirmPassword"]
+  path: ["confirmPassword"]
 })
 
 export function RegisterForm({
@@ -71,7 +71,9 @@ export function RegisterForm({
     };
 
     const res = await register(userInfo)
-    toast.success("you're sign-up successfully")
+    if (res.data || !res.error) {
+      toast.success(res.data?.message || "user created successfully")
+    }
 
     console.log(res)
   };
