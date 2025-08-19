@@ -1,10 +1,15 @@
 
+// import { config } from "@/Config";
 import { config } from "@/Config";
 import axios from "axios";
 
 export const instanceAxios = axios.create({
-  baseURL: config.baseUrl
+  baseURL: config.baseUrl,
+  withCredentials:true
+  
 });
+
+console.log(config.baseUrl)
 
 
 // Add a request interceptor

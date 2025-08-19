@@ -11,13 +11,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 // import { Divide } from "lucide-react";
 import Password from "../ui/Password";
 import { useRegisterMutation } from "@/Redux/Features/Auth/auth.api";
 import { toast } from "sonner";
+import { useState } from "react";
 
 // const registerSchema = z
 //   .object({
@@ -53,7 +54,8 @@ export function RegisterForm({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
   const [register] = useRegisterMutation();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [zodErrs, setZodeErrs] = useState("")
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -64,18 +66,33 @@ export function RegisterForm({
   })
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    const userInfo = {
-      name: data.name,
-      email: data.email,
-      password: data.password,
-    };
+    try {
+      const userInfo = {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+      };
 
-    const res = await register(userInfo)
-    if (res.data || !res.error) {
-      toast.success(res.data?.message || "user created successfully")
+      const res = await register(userInfo)
+      if (res.data || !res.error) {
+        toast.success(res.data?.message || "user created successfully")
+        navigate("/login")
+      }
+
+      console.log(res)
+    } catch (error: any) {
+      if (error.status === 400 && error.data.errorSources && error.data.message === "ZodError") {
+
+        const errs = error.data.errorSources;
+
+          errs.forEach((err: { path: string; message: string }) => {
+            form.setError(err.path as any, {
+              type: "server",
+              message: err.message,
+            });
+          });
+      }
     }
-
-    console.log(res)
   };
 
   return (
@@ -158,6 +175,7 @@ export function RegisterForm({
                 </FormItem>
               )}
             />
+            
             <Button type="submit" className="w-full">
               Submit
             </Button>
